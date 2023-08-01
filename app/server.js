@@ -78,10 +78,10 @@ verificacion.use((req,res,next)=>{
   }
 
 });
-app.get('/logout', (req, res) => {
-  res.clearCookie('token');
-  res.redirect('/');
-});
+// app.get('/logout', (req, res) => {
+//   res.clearCookie('token');
+//   res.redirect('/');
+// });
 
 
 module.exports={app,verificacion}
