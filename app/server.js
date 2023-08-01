@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { connection } = require('./app/database/db')
+const { connection } = require('./database/db')
 const express = require('express')
 const app = express()
 const port = 3000
@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 
-const keys = require('./app/settings/keys');
+const keys = require('./settings/keys');
 
 app.set('key', keys.key);
 app.use(express.urlencoded({ extended: false }));
@@ -91,14 +91,14 @@ module.exports={app,verificacion}
 //    res.json('INFORMACION IMPORTANTE ENTREGADA');
 // })
 
-app.use(require('./app/routes/routesAdmin'));
-app.use(require('./app/routes/routesCajas'));
-app.use(require('./app/routes/routesUser'));
+app.use(require('./routes/routesAdmin'));
+app.use(require('./routes/routesCajas'));
+app.use(require('./routes/routesUser'));
 
 
 
-const usersRouter = require('./app/routes/routesUser');
-const { password, username } = require('./config/database');
+const usersRouter = require('./routes/routesUser');
+const { password, username } = require('../config/database');
 
 app.use('/users', usersRouter);
 
