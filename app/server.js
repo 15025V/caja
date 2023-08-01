@@ -34,9 +34,10 @@ app.post('/login', (req, res) => {
       expiresIn: '7d'
     });
     res.cookie('token',token,{
+      domain:'146.190.165.182',
       httpOnly:true,
       secure:false,
-      sameSite:'lax'
+      sameSite:'none'
     })
     res.json({
       message: '¡AUTENTIFICAION EXITOSA!',
@@ -102,10 +103,18 @@ const { password, username } = require('../config/database');
 
 app.use('/users', usersRouter);
 
-app.listen(port, function () {
-  console.log(`Example app listening on port ${port}`);
-
+const ip = '146.190.165.182'; // reemplaza esto con tu dirección IP
+app.listen(port, ip, function () {
+  console.log(`Example app listening on ${ip}:${port}`);
   connection.sync({ force: false }).then(() => {
     console.log("Se ha establecido la conexión");
   })
 })
+
+// app.listen(port, function () {
+//   console.log(`Example app listening on port ${port}`);
+
+//   connection.sync({ force: false }).then(() => {
+//     console.log("Se ha establecido la conexión");
+//   })
+// })
