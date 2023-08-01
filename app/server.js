@@ -35,8 +35,8 @@ app.post('/login', (req, res) => {
     });
     res.cookie('token',token,{
       httpOnly:true,
-      secure:true,
-      sameSite:'strict'
+      secure:false,
+      sameSite:'lax'
     })
     res.json({
       message: '¡AUTENTIFICAION EXITOSA!',
