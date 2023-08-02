@@ -13,20 +13,20 @@ app.set('key', keys.key);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hola Mundo')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hola Mundo')
+// })
 
 const users={
-  'admin':'12345',
-  'admin2':'123456'
+  'admin@gmail.com':'12345',
+  'admin2@gmail.com':'123456'
 };
 
 app.post('/login', (req, res) => {
-  const username = req.body.usuario;
+  const email = req.body.email;
   const password = req.body.pass;
   // if (req.body.usuario == 'admin' && req.body.pass == "12345") {
-  if(users[username]&&users[username]== password){
+  if(users[email]&&users[email]== password){
     const payload = {
       check: true
     };
@@ -34,10 +34,9 @@ app.post('/login', (req, res) => {
       expiresIn: '7d'
     });
     res.cookie('token',token,{
-      domain:'146.190.165.182',
       httpOnly:true,
-      secure:false,
-      sameSite:'none'
+      secure:true,
+      sameSite:'strict'
     })
     res.json({
       message: '¡AUTENTIFICAION EXITOSA!',
@@ -45,7 +44,7 @@ app.post('/login', (req, res) => {
     })
   }else{
     res.json({
-      message:'Usuario y/o password son incorrectos'
+      message:'Email y/o password son incorrectos'
     })
   }
 })
@@ -79,10 +78,10 @@ verificacion.use((req,res,next)=>{
   }
 
 });
-// app.get('/logout', (req, res) => {
-//   res.clearCookie('token');
-//   res.redirect('/');
-// });
+app.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/');
+});
 
 
 module.exports={app,verificacion}
@@ -103,18 +102,10 @@ const { password, username } = require('../config/database');
 
 app.use('/users', usersRouter);
 
-const ip = '146.190.165.182'; // reemplaza esto con tu dirección IP
-app.listen(port, ip, function () {
-  console.log(`Example app listening on ${ip}:${port}`);
+app.listen(port, function () {
+  console.log(`Example app listening on port ${port}`);
+
   connection.sync({ force: false }).then(() => {
     console.log("Se ha establecido la conexión");
   })
 })
-
-// app.listen(port, function () {
-//   console.log(`Example app listening on port ${port}`);
-
-//   connection.sync({ force: false }).then(() => {
-//     console.log("Se ha establecido la conexión");
-//   })
-// })
